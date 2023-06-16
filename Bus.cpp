@@ -9,7 +9,7 @@ Bus::Bus(){
 Bus::~Bus(){
 
 }
-
+//w
 uint8_t Bus::read(uint16_t addr, bool readOnly){
     if(addr >= 0x0000 && addr <= 0xFFFF){
         return ram[addr];
