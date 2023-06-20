@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class Bus {
+class Bus { 
     public: 
         Bus();
         ~Bus();

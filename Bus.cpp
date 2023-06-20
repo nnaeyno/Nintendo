@@ -31,6 +31,7 @@ void Bus::write(uint16_t addr, uint8_t data){
         ppu.write(addr & 0x0007, data);
     }
 }
+  
 
 void Bus::reset(){
     cpu.reset();

@@ -761,4 +761,4 @@ uint8_t CPU::XXX(){
 
 bool CPU::complete(){
 	return cycles == 0;
-}
+}   
