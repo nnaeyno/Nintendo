@@ -13,7 +13,7 @@
 class Bus;
 
 using namespace std;
-
+  
 class CPU
 {
 public:
