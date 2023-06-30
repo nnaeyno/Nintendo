@@ -8,6 +8,12 @@ class PPU {
 	    uint8_t nameTable[2][Cartridge::ONE_KILOBYTE];  // two kilobytes 
         uint8_t	paletteTable[32]; //colors
         uint8_t patternTable[2][Cartridge::FOUR_KILOBYTES];
+        olc::Pixel screen[64]; //olc::Pixel is sourced from olcPixelGameEngine
+
+
+        shared_ptr<Cartridge> cart;
+        int16_t scanline = 0;
+	    int16_t cycle = 0;
 	    
     public:
         PPU();
