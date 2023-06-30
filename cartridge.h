@@ -16,7 +16,7 @@ class Cartridge {
         uint8_t mapperID = 0;
         uint8_t numPRG = 0;
         uint8_t numCHR = 0;
-        std::shared_ptr<Mapper> mapper;
+        shared_ptr<Mapper> mapper;
 
     public:
         Cartridge(const string& fileName);
