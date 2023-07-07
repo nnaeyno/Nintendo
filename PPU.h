@@ -85,6 +85,19 @@ class PPU {
 		uint16_t reg = 0x0000;
 	    };
 
+        struct sObjectAttributeEntry{
+            uint8_t y;			
+            uint8_t id;			
+            uint8_t attribute;	
+            uint8_t x;			
+        } OAM[64];
+
+        uint8_t oam_addr = 0x00;
+        sObjectAttributeEntry spriteScanline[8];
+	    uint8_t sprite_count;
+        uint8_t sprite_shifter_pattern_lo[8];
+	    uint8_t sprite_shifter_pattern_hi[8];
+
 
         loopy vram_addr;
         loopy tram_addr;
@@ -119,4 +132,5 @@ class PPU {
 
         olc::Sprite& getPatterns(uint8_t palette, uint8_t ind); //olc::Sprite& olc2C02::GetPatternTable(uint8_t i, uint8_t palette)
         olc::Pixel& getColourFromRam(uint8_t palette, uint8_t pix);
+        uint8_t* pOAM = (uint8_t*)OAM;
 };

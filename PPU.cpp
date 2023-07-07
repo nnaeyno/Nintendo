@@ -97,6 +97,7 @@ uint8_t PPU::read(uint16_t addr, bool RDONLY) {
 			case 0003: // OAM Address
 				break;
 			case 0004: // OAM Data
+				data = pOAM[oam_addr];
 				break;
 			case 0005: // Scroll
 				break;
@@ -160,8 +161,10 @@ void PPU::write(uint16_t addr, uint8_t data) {
     case 0002: // Status
         break;
     case 0003: // OAM Address
+		oam_addr = data;
         break;
     case 0004: // OAM Data
+		pOAM[oam_addr] = data;
         break;
     case 0005: // Scroll
 		if (address_latch == 0)
@@ -416,8 +419,50 @@ void PPU::clock() {
 			TransferAddressX();
 		}
 
+		if (cycle == 338 || cycle == 340)
+		{
+			bg_next_tile_id = ppuRead(0x2000 | (vram_addr.reg & 0x0FFF));
+		}
+
 		if(scanline == -1 && cycle >= 280 && cycle < 305){
 			TransferAddressY();
+		}
+		if(cycle == 257 && scanline >= 0){
+			std::memset(spriteScanline, 0xFF, 8 * sizeof(sObjectAttributeEntry));
+			sprite_count = 0;
+			uint8_t nOAMEntry = 0;
+			while(nOAMEntry < 64 && sprite_count < 9){
+				int16_t diff = ((int16_t)scanline - (int16_t)OAM[nOAMEntry].y);
+				if (diff >= 0 && diff < (control.sprite_size ? 16 : 8)){
+					if(sprite_count < 8){
+						memcpy(&spriteScanline[sprite_count], &OAM[nOAMEntry], sizeof(sObjectAttributeEntry));
+						sprite_count++;
+					}
+				}
+				nOAMEntry++;
+			}
+			status.sprite_overflow = (sprite_count > 8);
+		}
+		if(cycle == 340){
+			for (uint8_t i = 0; i < sprite_count; i++){
+				uint8_t sprite_pattern_bits_lo, sprite_pattern_bits_hi;
+				uint16_t sprite_pattern_addr_lo, sprite_pattern_addr_hi;
+
+				if (!control.sprite_size){
+					if (!(spriteScanline[i].attribute & 0x80)){
+
+					}else{
+
+					}
+				}else{
+					if (!(spriteScanline[i].attribute & 0x80)){
+
+					}else{
+						
+					}
+
+				}
+			}
 		}
 	}
 
@@ -483,7 +528,7 @@ olc::Sprite& PPU::getPatterns(uint8_t palette, uint8_t ind) {
 				uint8_t msb = ppuRead(ind * cartridge::FOUR_KILOBYTES + offset + i + 8); 
 
                 for(int j = 0; j < PPU::PIXEL_SIZE; j++){
-                    uint8_t pix = (lsb & 1) + (msb & 1);
+                    uint8_t pix = ((lsb & 0x01) << 1) | (msb & 0x01);
                     lsb >>= 0x1; 
                     msb >>= 0x1;
                     spritePatterns[i]->SetPixel(x * 8 + (7 - j), y * 8 + i, getColourFromRam(palette, pix));
