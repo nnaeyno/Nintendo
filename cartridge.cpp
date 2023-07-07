@@ -14,7 +14,11 @@ Cartridge::Cartridge(const string& fileName){
 
 		// get Mapper ID
 		mapperID = ((header.mapper2 >> 4) << 4) | (header.mapper1 >> 4);
-		
+		if (header.mapper1 & 0x01) {
+    		mirror = VERTICAL;
+		} else {
+			mirror = HORIZONTAL;
+		}
 		uint8_t fileType = 1;
 
         // get File Format

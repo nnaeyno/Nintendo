@@ -46,4 +46,11 @@ class Cartridge {
             char unused[5];
         } header;
 
+        enum MIRROR{
+            HORIZONTAL,
+            VERTICAL,
+            ONESCREEN_LO,
+            ONESCREEN_HI,
+        } mirror = HORIZONTAL;
+
 };
