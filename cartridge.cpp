@@ -1,6 +1,7 @@
 #include "cartridge.h"
 
 Cartridge::Cartridge(const string& fileName){
+	validImage = false;
     ifstream ifs;
 
 	ifs.open(fileName, ifstream::binary);
@@ -49,6 +50,7 @@ Cartridge::Cartridge(const string& fileName){
                 // choosing which mapper to use
 
 		}
+		validImage = true;
 		ifs.close();
     }
 }
@@ -109,4 +111,8 @@ bool Cartridge::ppuWrite(uint16_t addr, uint8_t data)
 	}
 	else
 		return false;
+}
+bool Cartridge::isImageValid()
+{
+	return validImage;
 }

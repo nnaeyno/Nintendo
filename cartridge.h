@@ -17,6 +17,7 @@ class Cartridge {
         uint8_t numPRG = 0;
         uint8_t numCHR = 0;
         shared_ptr<Mapper> mapper;
+        bool validImage = false;
 
     public:
         Cartridge(const string& fileName);
@@ -32,6 +33,8 @@ class Cartridge {
 
         bool write(uint16_t addr, uint8_t data); //CPUWrite
         bool ppuWrite(uint16_t addr, uint8_t data);
+
+        bool isImageValid();
 
         struct Header
         {

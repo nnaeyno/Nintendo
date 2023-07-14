@@ -61,12 +61,12 @@ void Bus::clock(){
     if(numSystemClockCounter % 3 == 0){
         if(dma_transfer){
             if (dma_dummy){
-				if (nSystemClockCounter % 2 == 1){
+				if (numSystemClockCounter % 2 == 1){
 					dma_dummy = false;
 				}
 			}else{
-                if (nSystemClockCounter % 2 == 0){
-					dma_data = cpuRead(dma_page << 8 | dma_addr);
+                if (numSystemClockCounter % 2 == 0){
+					dma_data = read(dma_page << 8 | dma_addr);
 				}else{
 					ppu.pOAM[dma_addr] = dma_data;
                     dma_addr++;

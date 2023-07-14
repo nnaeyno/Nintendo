@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include "cartridge.h"
+#include "olcPixelEngine.h"
 
 using namespace std;
 
@@ -15,11 +16,12 @@ class PPU {
         //sprite is foreground stuff
         olc::Sprite* spritePatterns[2]; //sprPatternTable
         olc::Sprite* spriteScreen; //sprScreen
-	    olc::Sprite* spriteNames[]; //sprNameTable
+	    olc::Sprite* spriteNames[2]; //sprNameTable
         shared_ptr<Cartridge> cart;
         int16_t scanline = 0;
 	    int16_t cycle = 0;
-
+        bool bSpriteZeroHitPossible = false;
+	    bool bSpriteZeroBeingRendered = false;
         // understand the syntax and what does it do 
         union
         {
@@ -112,6 +114,7 @@ class PPU {
         uint16_t bg_shifter_pattern_hi = 0x0000;
         uint16_t bg_shifter_attrib_lo  = 0x0000;
         uint16_t bg_shifter_attrib_hi  = 0x0000;
+
     public:
         PPU();
         ~PPU();
@@ -132,5 +135,7 @@ class PPU {
 
         olc::Sprite& getPatterns(uint8_t palette, uint8_t ind); //olc::Sprite& olc2C02::GetPatternTable(uint8_t i, uint8_t palette)
         olc::Pixel& getColourFromRam(uint8_t palette, uint8_t pix);
+        olc::Sprite& getScreen();
         uint8_t* pOAM = (uint8_t*)OAM;
+        bool frame_complete = false;
 };
