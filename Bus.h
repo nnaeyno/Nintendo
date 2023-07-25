@@ -34,6 +34,8 @@ class Bus {
         uint8_t dma_page = 0x00;
 	    uint8_t dma_addr = 0x00;
 	    uint8_t dma_data = 0x00;
+
+        // direct memory access from CPU to OAM (information about Sprites)
         bool dma_transfer = false;
         bool dma_dummy = true;
 };

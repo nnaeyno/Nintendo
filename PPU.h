@@ -16,12 +16,14 @@ class PPU {
         //sprite is foreground stuff
         olc::Sprite* spritePatterns[2]; //sprPatternTable
         olc::Sprite* spriteScreen; //sprScreen
+        // ids for what to be shown from patterTable
 	    olc::Sprite* spriteNames[2]; //sprNameTable
         shared_ptr<Cartridge> cart;
         int16_t scanline = 0;
 	    int16_t cycle = 0;
         bool bSpriteZeroHitPossible = false;
 	    bool bSpriteZeroBeingRendered = false;
+        
         // understand the syntax and what does it do 
         union
         {

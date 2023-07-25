@@ -1,6 +1,9 @@
 #include "cartridge.h"
-
-Cartridge::Cartridge(const string& fileName){
+/*
+Cartridge is ROM (Read Only Memory), Mapper, Pattern 
+Communacation for CPU and PPU to the Mapper
+*/
+Cartridge::Cartridge(const string& fileName){ //.nes
 	validImage = false;
     ifstream ifs;
 
@@ -112,6 +115,7 @@ bool Cartridge::ppuWrite(uint16_t addr, uint8_t data)
 	else
 		return false;
 }
+
 bool Cartridge::isImageValid()
 {
 	return validImage;

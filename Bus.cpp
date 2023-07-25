@@ -1,9 +1,16 @@
 #include "Bus.h"
 #include "cartridge.h"
 
+/*
+
+Bus class is representation of a connector that 
+let's CPU, PPU, RAM and other components to talk to 
+each other and exchange information. This allows our system
+to have better isolation between components. 
+
+*/
 
 Bus::Bus(){
-   // for(auto &bucket : cpuRam) bucket = 0x00;
 
     cpu.connectToBus(this);
 }
@@ -11,7 +18,13 @@ Bus::Bus(){
 Bus::~Bus(){
 
 }
-
+/**
+ * @brief CPU's read 
+ * 
+ * @param addr where to read
+ * @param readOnly defining permissions
+ * @return uint8_t data read from address provided
+ */
 uint8_t Bus::read(uint16_t addr, bool readOnly){
     uint8_t data = 0x00;
     if(cart->read(addr, data)){
@@ -19,8 +32,9 @@ uint8_t Bus::read(uint16_t addr, bool readOnly){
     }else if(addr >= 0x0000 && addr <= MAX_CPU){
         data = cpuRam[addr & 0x07FF];
     }else if(addr >= 0x2000 && addr <= PPU::MAX_PPU){
-        ppu.read(addr & 0x0007, data);
+        ppu.read(addr & 0x0007, readOnly);
     }else if(addr >= 0x4016 && addr <= 0x4017){
+        // read status of the CPU-PPU connection
         data = (controller_state[addr & 0x0001] & 0x80) > 0;
         controller_state[addr & 0x0001] <<= 1;
     }
@@ -55,7 +69,14 @@ void Bus::insertCartridge(const std::shared_ptr<Cartridge>& cartridge)
 	this->cart = cartridge;
 	ppu.connectCartridge(cartridge);
 }
-
+/**
+ * @brief 
+ * in what sequence th einstructions 
+ * should be executed and updating the status 
+ * PPU is 3 times faster than CPU (thus the
+ * if statements)
+ * 
+ */
 void Bus::clock(){
     ppu.clock();
     if(numSystemClockCounter % 3 == 0){
@@ -83,7 +104,7 @@ void Bus::clock(){
         }
         
     }
-
+    // if clock cycle is an interrupt
     if (ppu.nmi){
 	 	ppu.nmi = false;
 		cpu.nmi();

@@ -10,7 +10,9 @@ using namespace std;
 class Cartridge {
 
     private:
+        // program memory (back end logic)
         vector<uint8_t> vPRGMemory;
+        // char and pattern memory (front end logic)
         vector<uint8_t> vCHRMemory;
 
         uint8_t mapperID = 0;

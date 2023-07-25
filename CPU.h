@@ -112,4 +112,5 @@ private:
 private:
 	FILE* logfile = nullptr;
 #endif
+
 };

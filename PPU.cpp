@@ -1,6 +1,8 @@
 #include <cstdint>
 #include "PPU.h"
-
+/*
+Picture Processing Unit
+*/
 PPU::PPU(){
     screen[0]  = olc::Pixel(84, 84, 84);
 	screen[1]  = olc::Pixel(0, 30, 116);
@@ -81,7 +83,7 @@ PPU::PPU(){
 
 uint8_t PPU::read(uint16_t addr, bool RDONLY) {
     uint8_t data = 00;
-
+	// for debugging
     if(RDONLY){
 		switch (addr)
 			{
