@@ -1,4 +1,4 @@
-<img width="1440" alt="Screenshot 2023-07-26 at 23 21 19" src="https://github.com/nnaeyno/Nintendo/assets/91560225/c6417a92-9149-4ac4-b996-4e74f75c87c6"># Nintendo
+# Nintendo
 NES emulator (Written in 2023)
 
 Collaborators:
