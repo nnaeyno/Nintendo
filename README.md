@@ -6,6 +6,7 @@ Zuka Grdzelidze
 Nino Gogoberishvili
 
 Resources:
+
 http://archive.6502.org/datasheets/rockwell_r650x_r651x.pdf?fbclid=IwAR17-NylUzNg6pGn-BuMyC2qxIFkSROR-h4jdUHphALVY7ymZnkeGEfK2ZU
 
 https://archive.org/details/assembler-routines-for-the-6502/page/n5/mode/2up
